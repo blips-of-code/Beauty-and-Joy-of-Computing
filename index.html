@@ -21,13 +21,218 @@
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
-		"name": "",
-		"logo": "images/default-logo.png"
+		"name": "Site1",
+		"logo": "images/Auburn_Tigers_logo.svg"
 }</script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="Home">
+    <meta property="og:description" content="">
     <meta property="og:type" content="website">
-  <meta name="referrer" content="origin"><meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <meta name="referrer" content="origin"><script>
+    window.recaptchaRenderedV2 = false;
+    window.recaptchaFallback = false;
+    window.recaptchaSiteKeyV2 = '6LebRIorAAAAAEBCYCVXLpZKNt1KxwfbefWqDvFL';
+
+    function gdprConfirmed() {
+        return true;
+    }
+
+    function dynamicLoadScript() {
+        var script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js?render=6LepPyAsAAAAAPlia0UVDShnOuLfUOATfEiOJyx3';
+        script.async = true;
+        script.onload = function () {
+            var event = new CustomEvent("recaptchaLoaded");
+            document.dispatchEvent(event);
+        };
+        document.body.appendChild(script);
+    }
+
+    function showRecaptchaError(error) {
+        error = error || '';
+        var formError = document.querySelector('.u-form-send-error');
+
+        if (formError) {
+            formError.innerText = 'Site Owner Error: ' + error.replace(/:[\s\S]*/, '');
+            formError.style.display = 'block';
+        }
+
+        console.error('Error in grecaptcha: ', error);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var confirmButtons = document.querySelectorAll('.u-cookies-consent .u-button-confirm');
+        confirmButtons.forEach(function (button) {
+            button.onclick = dynamicLoadScript;
+        });
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            if (!gdprConfirmed()) {
+                return;
+            }
+            dynamicLoadScript();
+        });
+    </script>
+
+    <script>
+        document.addEventListener("recaptchaLoaded", function() {
+            if (!gdprConfirmed()) {
+                return;
+            }
+
+            (function (grecaptcha, sitekey, actions) {
+                var recaptcha = {
+                    execute: function (action, submitFormCb) {
+                        if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute !== 'function') {
+                            showRecaptchaError('reCAPTCHA script failed to load.');
+                            return;
+                        }
+
+                        try {
+                            grecaptcha.execute(sitekey, {action: action}).then((token) => {
+                                if (!token) {
+                                    throw new Error('Empty token received from reCAPTCHA');
+                                }
+
+                                var forms = document.getElementsByTagName('form');
+
+                                for (var i = 0; i < forms.length; i++) {
+                                    var response = forms[i].querySelector('[name="recaptchaResponse"]');
+
+                                    if (!response) {
+                                        response = document.createElement('input');
+                                        response.setAttribute('type', 'hidden');
+                                        response.setAttribute('name', 'recaptchaResponse');
+                                        forms[i].appendChild(response);
+                                    }
+
+                                    response.value = token;
+                                }
+
+                                submitFormCb();
+                            }).catch((e) => {
+                                showRecaptchaError(e.message);
+                            });
+                        } catch (e) {
+                            showRecaptchaError(e.message);
+                        }
+                    },
+
+                    executeContact: function (submitFormCb) {
+                        recaptcha.execute(actions['contact'], submitFormCb);
+                    }
+                };
+
+                window.recaptchaObject = recaptcha;
+                window.grecaptchaObject = grecaptcha;
+            })(
+                grecaptcha,
+                
+                '6LepPyAsAAAAAPlia0UVDShnOuLfUOATfEiOJyx3',
+                {'contact': 'contact'}
+            );
+        });
+    </script>
+
+    <script>
+    window.showRecaptchaV2 = function (form) {
+        if (!form || !form.length) {
+            return;
+        }
+        if (typeof window.grecaptchaObject === 'undefined' || !window.grecaptchaObject) {
+            return;
+        }
+
+        const formEl = form[0];
+
+        let container = document.getElementById('recaptcha-v2-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'recaptcha-v2-container';
+            formEl.parentElement.appendChild(container);
+        }
+
+        let tokenReceived = false;
+        let timeoutHandle;
+
+        if (window.recaptchaRenderedV2 === false || typeof window.recaptchaRenderedV2 === 'undefined') {
+            window.recaptchaRenderedV2 = window.grecaptchaObject.render('recaptcha-v2-container', {
+                'sitekey': window.recaptchaSiteKeyV2,
+                'size': 'invisible',
+                'callback': function (token) {
+                    clearTimeout(timeoutHandle);
+
+                    if (!token) {
+                        showRecaptchaError('reCAPTCHA v2 token was empty. Please try again.');
+                        return;
+                    }
+
+                    tokenReceived = true;
+
+                    let recaptchaResponseV2 = formEl.querySelector('input[name="recaptchaResponseV2"]');
+
+                    if (!recaptchaResponseV2) {
+                        recaptchaResponseV2 = document.createElement('input');
+                        recaptchaResponseV2.type = 'hidden';
+                        recaptchaResponseV2.name = 'recaptchaResponseV2';
+                        formEl.appendChild(recaptchaResponseV2);
+                    }
+
+                    recaptchaResponseV2.value = token;
+
+                    if (window.recaptchaSiteKeyV2) {
+                        let siteKeyInput = formEl.querySelector('input[name="siteKey"]');
+
+                        if (siteKeyInput) {
+                            siteKeyInput.value = window.recaptchaSiteKeyV2;
+                        }
+                    }
+
+                    document.querySelectorAll('.u-form-send-error').forEach(el => {
+                        el.style.display = 'none';
+                    });
+
+                    const event = new CustomEvent('submit', {
+                        detail: { recaptchaPassed: true },
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    formEl.dispatchEvent(event);
+                },
+                'error-callback': function () {
+                    clearTimeout(timeoutHandle);
+                    showRecaptchaError('reCAPTCHA v2 error. Please try again.');
+                },
+                'expired-callback': function () {
+                    clearTimeout(timeoutHandle);
+                }
+            });
+
+            window.grecaptchaObject.reset(window.recaptchaRenderedV2);
+
+            setTimeout(() => {
+                window.grecaptchaObject.execute(window.recaptchaRenderedV2);
+            }, 300);
+
+            timeoutHandle = setTimeout(function () {
+                if (!tokenReceived) {
+                    showRecaptchaError('The Contact Form could not be submitted because Google reCAPTCHA v3 detected unusual activity from your connection. Please try again later, or complete the reCAPTCHA v2 challenge if it appears.');
+                }
+            }, 120000);
+        } else {
+            window.grecaptchaObject.reset(window.recaptchaRenderedV2);
+
+            setTimeout(() => {
+                window.grecaptchaObject.execute(window.recaptchaRenderedV2);
+            }, 300);
+        }
+    };
+    </script>
+<meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
   <body data-home-page="Home.html" data-home-page-title="Home" data-path-to-root="./" data-include-products="false" class="u-body u-clearfix u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="header"><div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1" role="navigation" aria-label="Menu navigation">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -58,8 +263,8 @@
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
-        <a href="#" class="u-image u-logo u-image-1">
-          <img src="images/default-logo.png" class="u-logo-image u-logo-image-1">
+        <a href="#" class="u-image u-logo u-image-1" data-image-width="250" data-image-height="220">
+          <img src="images/Auburn_Tigers_logo.svg" class="u-logo-image u-logo-image-1">
         </a>
       </div></header>
     <section class="u-align-center u-clearfix u-container-align-center u-image u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-section-1" id="sec-2765" data-image-width="1980" data-image-height="1114">
@@ -69,7 +274,7 @@
             <div class="u-align-left u-container-align-left u-container-style u-layout-cell u-left-cell u-shape-rectangle u-size-20-lg u-size-20-xl u-size-23-md u-size-23-sm u-size-23-xs u-size-xs-60 u-layout-cell-1" src="">
               <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
                 <h1 class="u-text u-text-body-alt-color u-text-1" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Left" data-animation-delay="250">BJC @ Auburn</h1>
-                <p class="u-text u-text-body-alt-color u-text-2" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Up" data-animation-delay="250">Description: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident</p>
+                <p class="u-text u-text-body-alt-color u-text-2" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Up" data-animation-delay="250">Mission: ​​Beauty and Joy of Computing is an interactive learning platform designed to help students explore the core ideas of computer science through accessible lessons, engaging visuals, and hands-on experiences</p>
                 <a href="About.html" data-page-id="176410369" class="u-border-none u-btn u-btn-round u-button-style u-palette-3-base u-radius-10 u-text-palette-1-base u-btn-1" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Up" data-animation-delay="500" title="About">learn more</a>
               </div>
             </div>
@@ -93,9 +298,9 @@
                 <div class="u-align-center u-container-align-center u-container-style u-layout-cell u-radius-20 u-right-cell u-shape-round u-size-40 u-white u-layout-cell-2" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Left" data-animation-delay="250">
                   <div class="u-container-layout u-valign-top u-container-layout-2">
                     <img class="u-expanded-width u-image u-image-round u-radius-20 u-image-1" src="images/bn.jpg" alt="" data-image-width="800" data-image-height="800" data-animation-name="fadeIn" data-animation-duration="2000" data-animation-direction="Left" data-animation-delay="250">
-                    <h5 class="u-text u-text-1"> Experience what you have learned</h5>
-                    <p class="u-text u-text-2"> We treat each child as a unique individual and aim to instil in them a sense of curiosity and a love of learning that will continue throughout their lives.</p>
-                    <a href="#" class="u-border-none u-btn u-btn-round u-button-style u-palette-3-base u-radius-10 u-text-palette-1-base u-btn-1" data-animation-name="rollIn" data-animation-duration="1000" data-animation-direction="" data-animation-delay="500">learn more</a>
+                    <h5 class="u-text u-text-1">Indulge in your curiosities</h5>
+                    <p class="u-text u-text-2"> Start here to explore the ideas that power modern technology.&nbsp; Lessons are paced for beginners, with clear explanations and examples you can follow at your own speed.&nbsp;</p>
+                    <a href="Learning-Tools.html" data-page-id="327019116" class="u-border-none u-btn u-btn-round u-button-style u-palette-3-base u-radius-10 u-text-palette-1-base u-btn-1" data-animation-name="rollIn" data-animation-duration="1000" data-animation-direction="" data-animation-delay="500" title="Learning Tools">learn more</a>
                   </div>
                 </div>
               </div>
@@ -109,8 +314,8 @@
                 </div>
                 <div class="u-align-center u-container-align-center u-container-style u-layout-cell u-left-cell u-size-20 u-white u-layout-cell-4">
                   <div class="u-container-layout u-valign-top u-container-layout-4">
-                    <h3 class="u-text u-text-default u-text-3"> School librarians hear the question all the time</h3>
-                    <p class="u-text u-text-4">Egestas dui id ornare arcu odio. In tellus integer feugiat scelerisque varius morbi enim nunc. Habitasse platea dictumst quisque sagittis. Interdum velit euismod in pellentesque massa placerat duis. Quis viverra nibh cras pulvinar mattis.<br>
+                    <h3 class="u-text u-text-default u-text-3">Experience what you have learned</h3>
+                    <p class="u-text u-text-4">We treat each learner as a unique individual and aim to instill in them a sense of curiosity and a love of knowledge that will stay with them throughout their lives.<br>
                     </p>
                     <p class="u-text u-text-default u-text-5">Here's what you can do to help</p>
                   </div>
@@ -128,19 +333,20 @@
           <div class="u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-white u-list-item-1" data-animation-name="flipIn" data-animation-duration="1000" data-animation-direction="X" data-animation-delay="250">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
               <h3 class="u-text u-text-default u-text-palette-1-base u-text-1">01</h3>
-              <p class="u-text u-text-2">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p class="u-text u-text-2">Learn the Basics. ​Start with the foundations of computing: logic, algorithms, and how computers follow instructions. These beginner-friendly lessons introduce each concept step by step, with examples you can relate to.&nbsp;</p>
             </div>
           </div>
           <div class="u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-white" data-animation-name="flipIn" data-animation-duration="1000" data-animation-direction="X" data-animation-delay="250">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
               <h3 class="u-text u-text-default u-text-palette-1-base u-text-3">02</h3>
-              <p class="u-text u-text-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p class="u-text u-text-4">Explore Ideas Visually. ​Understand core computing ideas through diagrams, timelines, icons, and simple real-world comparisons. Visual explanations help break down complex topics into something clear and intuitive.&nbsp;</p>
             </div>
           </div>
           <div class="u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-white" data-animation-name="flipIn" data-animation-duration="1000" data-animation-direction="X" data-animation-delay="250">
             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
               <h3 class="u-text u-text-default u-text-palette-1-base u-text-5">03</h3>
-              <p class="u-text u-text-6">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p class="u-text u-text-6">Practice with Interactive Tools.&nbsp;​Apply what you’ve learned through short activities, challenges, and guided practice. These tools help reinforce key concepts in a hands-on way, through active learning, rather than memorization.<br>
+              </p>
             </div>
           </div>
         </div>
@@ -153,11 +359,11 @@
         <img class="u-align-left u-image u-image-round u-radius-20 u-image-1" data-image-width="900" data-image-height="900" src="images/5178414.jpg">
         <div class="u-container-style u-grey-5 u-group u-radius-20 u-shape-round u-group-1">
           <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-container-layout-1">
-            <h3 class="u-align-left u-text u-text-default u-text-1"> Good things don’t come easy</h3>
-            <p class="u-align-left u-text u-text-2"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <h3 class="u-align-left u-text u-text-default u-text-1">Everyone Can Learn Computing</h3>
+            <p class="u-align-left u-text u-text-2"> Whether you’re new to coding or just exploring CS out of curiosity, this platform supports learners of all backgrounds. Lessons are paced for beginners, with clear explanations and examples you can follow at your own speed. Computing isn’t limited to experts; with the right guidance, anyone can develop confidence and discover the creativity behind computer science. </p>
             <p class="u-align-left u-text u-text-default u-text-3">Images from <a href="https://www.freepik.com/psd/woman" class="u-border-1 u-border-active-palette-1-base u-border-black u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-btn u-button-link u-button-style u-none u-text-body-color u-btn-1">Freepik</a>
             </p>
-            <a href="#" class="u-border-none u-btn u-btn-round u-button-style u-palette-3-base u-radius-10 u-text-palette-1-base u-btn-2">learn more</a>
+            <a href="Learning-Tools.html" data-page-id="327019116" class="u-border-none u-btn u-btn-round u-button-style u-palette-3-base u-radius-10 u-text-palette-1-base u-btn-2" title="Learning Tools">learn more</a>
           </div>
         </div>
         <div class="u-gradient u-shape u-shape-circle u-shape-2"></div>
@@ -194,6 +400,7 @@
                       <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
                       <input type="hidden" value="" name="recaptchaResponse">
                       <input type="hidden" name="formServices" value="bccec2f2-87c5-33db-dd38-1a84827669d3">
+                      <input type="hidden" name="siteKey" value="6LepPyAsAAAAAPlia0UVDShnOuLfUOATfEiOJyx3">
                     </form>
                   </div>
                 </div>
@@ -209,7 +416,5 @@
     <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-80 u-footer" id="footer"><div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">2025 Auburn University. Beauty and Joy of Computing</p>
       </div></footer>
-    <section class="u-backlink u-clearfix u-grey-80"> This <a href="https://nicepage.com/one-page-template">One Page Template</a> was created with Nicepage Website Builder 
-    </section>
   
 </body></html>
