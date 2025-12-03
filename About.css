@@ -1,3 +1,62 @@
 .u-section-1 .u-sheet-1 {
   min-height: 400px;
 }
+
+.about-box {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+
+  border-radius: 12px;
+  backdrop-filter: blur(4px); /* optional for glass effect */
+}
+
+.about-box h2 {
+  margin-bottom: 36px;
+  font-size: 2rem;
+}
+
+.about-box p {
+  line-height: 1.6;
+  font-size: 1.4rem;
+}
+
+h2
+{
+  font-size: 42px;
+  text-align: center;
+}
+
+ .u-section-1 {
+  background-image: url("images/jh.jpg");
+  background-position: 50% 50%;
+  min-height: 164px;
+}
+
+.u-section-1 .u-layout-wrap-1 {
+  pointer-events: auto;
+  width: calc(((100% - 1140px) / 2)  + 1140px);
+  margin: 1px 0 -307px auto;
+}
+
+.u-section-1 .u-layout-cell-1 {
+  min-height: 471px;
+  pointer-events: auto;
+}
+
+.u-section-1 .u-container-layout-1 {
+  padding: 40px 0 30px 40px;
+}
+
+.u-section-1 .u-text-1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 11px 0 0;
+}
+
+.u-section-2 .u-image-1 {
+  min-height: 471px;
+  pointer-events: auto;
+  background-image: url("images/5807340-min.png");
+  background-position: 0% 50%;
+}
