@@ -57,11 +57,34 @@
         <a href="#" class="u-image u-logo u-image-1">
           <img src="images/default-logo.png" class="u-logo-image u-logo-image-1">
         </a>
-      </div></header>
+      </div></header>   
+
     <section class="u-clearfix u-section-1" id="block-1">
-      <div class="u-clearfix u-sheet u-sheet-1"></div>
-    </section>
-    
+  <div class="u-clearfix u-sheet u-sheet-1 about-box">
+    <h2>Contact the BJC @ Auburn Team</h2>
+  <form id="contactForm" class="u-form u-form-1" onsubmit="event.preventDefault(); alert('Form submitted! This is a simulation.');">
+
+    <div class="u-form-group u-form-name">
+      <label for="name" class="u-label">Name</label>
+      <input type="text" placeholder="Enter your name" id="name" name="name" class="u-input u-input-rectangle" required="">
+    </div>
+
+    <div class="u-form-group u-form-email">
+      <label for="email" class="u-label">Email</label>
+      <input type="email" placeholder="Enter your email" id="email" name="email" class="u-input u-input-rectangle" required="">
+    </div>
+
+    <div class="u-form-group u-form-message">
+      <label for="message" class="u-label">Message</label>
+      <textarea placeholder="Write your message" rows="5" id="message" name="message" class="u-input u-input-rectangle" required=""></textarea>
+    </div>
+
+    <div class="u-align-left u-form-group u-form-submit">
+      <button class="u-btn u-button-style u-palette-1-base u-btn-submit">Send Message</button>
+    </div>
+  </form>
+  </div>
+</section>
     
     
     <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-80 u-footer" id="footer"><div class="u-clearfix u-sheet u-sheet-1">
