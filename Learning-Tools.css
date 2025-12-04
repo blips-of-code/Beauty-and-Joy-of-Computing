@@ -162,7 +162,7 @@
 
 .u-section-2 .u-text-1 {
   font-size: 3rem;
-  margin: 0;
+  margin: 28px 0 0;
 }
 
 .u-section-2 .u-text-2 {
@@ -176,17 +176,6 @@
 .u-section-2 .u-btn-1 {
   border-style: solid;
   padding: 0;
-}
-
-.u-section-2 .u-btn-2 {
-  background-image: none;
-  border-style: none;
-  font-size: 1rem;
-  letter-spacing: 2px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin: 28px auto 0 0;
-  padding: 15px 44px 17px;
 }
 
 .u-section-2 .u-list-1 {
@@ -372,6 +361,10 @@
     margin-top: -646px;
   }
 
+  .u-section-2 .u-text-1 {
+    margin-top: 1px;
+  }
+
   .u-section-2 .u-text-2 {
     margin-right: 168px;
   }
@@ -532,6 +525,7 @@
   .u-section-2 .u-text-1 {
     font-size: 1.875rem;
     width: auto;
+    margin-top: 41px;
   }
 
   .u-section-2 .u-text-2 {
